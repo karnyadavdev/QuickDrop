@@ -1,0 +1,54 @@
+name: quickdrop
+description: A simple local file sharing app for Windows, Android, and Linux.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.10.3 <4.0.0'
+  flutter: '>=3.38.4'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  file_picker: ^8.0.0
+  path_provider: ^2.1.2
+  cryptography: ^2.7.0
+  cryptography_flutter: ^2.3.4
+  path: ^1.9.0
+  archive: ^3.3.7
+  url_launcher: ^6.3.2
+  font_awesome_flutter: ^11.0.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  test: ^1.25.15
+  flutter_lints: ^3.0.0
+  inno_bundle: ^0.11.2
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/fonts/OFL.txt
+    - assets/ui/green_waves.webp
+  fonts:
+    - family: Manrope
+      fonts:
+        - asset: assets/fonts/Manrope.ttf
+
+inno_bundle:
+  id: 63b4a400-79f4-11f1-8a66-ebceabe80069
+  name: QuickDrop
+  publisher: karnyadavdev
+  icon: windows/runner/resources/app_icon.ico
+  languages:
+    - english
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  windows:
+    generate: true
+    image_path: "assets/images/logo.png"
+    icon_size: 256
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 29

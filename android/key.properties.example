@@ -1,0 +1,5 @@
+# Copy this file to key.properties. Never commit key.properties or the keystore.
+storeFile=C:/Users/YOUR_NAME/.quickdrop/quickdrop-release.jks
+storePassword=replace-with-your-password
+keyAlias=quickdrop-release
+keyPassword=replace-with-your-password

@@ -1,0 +1,4 @@
+[QuickDrop]
+title=QuickDrop
+description=Local device discovery and file transfers
+ports=55555/udp|50005:50050/tcp

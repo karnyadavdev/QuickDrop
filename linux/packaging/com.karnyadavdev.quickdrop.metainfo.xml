@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.karnyadavdev.quickdrop</id>
+  <name>QuickDrop</name>
+  <summary>Send files directly over your local network</summary>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <developer id="com.karnyadavdev">
+    <name>karnyadavdev</name>
+  </developer>
+  <description>
+    <p>
+      QuickDrop sends files and folders directly between nearby devices without
+      an account or cloud upload.
+    </p>
+  </description>
+  <launchable type="desktop-id">com.karnyadavdev.quickdrop.desktop</launchable>
+  <url type="homepage">https://github.com/karnyadavdev</url>
+  <provides>
+    <binary>quickdrop</binary>
+  </provides>
+  <releases>
+    <release version="@VERSION@" date="2026-07-13"/>
+  </releases>
+</component>

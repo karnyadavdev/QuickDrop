@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=QuickDrop
+GenericName=File Sharing
+Comment=Send files directly over your local network
+Exec=quickdrop
+Icon=com.karnyadavdev.quickdrop
+Terminal=false
+Type=Application
+Categories=Utility;Network;
+Keywords=file;folder;share;send;transfer;wifi;
+StartupNotify=true
+StartupWMClass=com.karnyadavdev.quickdrop
