@@ -1,0 +1,91 @@
+name: Linux package
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build-deb:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out the source
+        uses: actions/checkout@v4
+
+      - name: Install Linux build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            clang cmake ninja-build pkg-config libgtk-3-dev \
+            libblkid-dev liblzma-dev desktop-file-utils xvfb
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.44.4"
+          channel: stable
+          cache: true
+
+      - name: Check the source
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
+
+      - name: Build the Debian package
+        run: bash linux/packaging/build_deb.sh
+
+      - name: Check and install the package
+        shell: bash
+        run: |
+          set -euo pipefail
+          package="$(find build/linux/packages -maxdepth 1 -name '*.deb' -type f -print -quit)"
+          test -n "$package"
+          desktop-file-validate linux/packaging/quickdrop.desktop
+          dpkg-deb --info "$package"
+          dpkg-deb --contents "$package"
+          sudo apt-get install -y "./$package"
+          test -x /usr/bin/quickdrop
+
+          set +e
+          timeout 12s xvfb-run -a /usr/bin/quickdrop
+          app_status=$?
+          set -e
+          if [[ $app_status -ne 124 ]]; then
+            echo "QuickDrop exited unexpectedly with status $app_status" >&2
+            exit 1
+          fi
+
+          sudo apt-get remove -y quickdrop
+          test ! -e /usr/bin/quickdrop
+
+      - name: Check dependencies on clean Ubuntu systems
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_folder="$(pwd)/build/linux/packages"
+          for ubuntu_version in 22.04 24.04; do
+            docker run --rm \
+              --volume "$package_folder:/packages:ro" \
+              "ubuntu:$ubuntu_version" \
+              bash -c '
+                set -e
+                apt-get update
+                apt-get install -y /packages/*.deb
+                test -x /usr/bin/quickdrop
+                ! ldd /opt/quickdrop/quickdrop | grep "not found"
+              '
+          done
+
+      - name: Save the installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: QuickDrop-Linux-DEB
+          path: build/linux/packages/*.deb
+          if-no-files-found: error
