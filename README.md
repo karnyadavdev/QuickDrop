@@ -2,8 +2,6 @@
   <img src="assets/images/logo.png" width="180" alt="QuickDrop logo">
 </p>
 
-# QuickDrop
-
 <p align="center">
   <img src="https://img.shields.io/badge/Windows-0078D4?style=flat-square&logo=windows11&logoColor=white" alt="Windows">
   <img src="https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android">
